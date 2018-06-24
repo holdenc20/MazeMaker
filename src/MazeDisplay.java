@@ -24,14 +24,25 @@ public class MazeDisplay extends JPanel{
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
 		window.pack();
+		boolean f=false;
 		
-		maze = MazeMaker.generateMaze(5, 5);
+		while(f==false) {
+			
+		maze = MazeMaker.generateMaze(10, 10);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		repaint();
+		}
 	}
 	
 	@Override
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		maze.draw(g);
+	
 	}
 	
 	public static void main(String[] args) {

@@ -10,48 +10,75 @@ public class MazeMaker{
 	
 	private static Maze maze;
 	
-	private static Random randGen = new Random();
-	private static Stack<Cell> uncheckedCells = new Stack<Cell>();
-	
+	private static Random rng = new Random();
+	public static int p=0;
 	
 	public static Maze generateMaze(int w, int h){
+		System.out.println(p);
 		width = w;
 		height = h;
 		maze = new Maze(width, height);
-		
+		if(p==0) {
+			
+			maze.getCell(4, 5).makeAlive(true);
+			maze.getCell(6, 5).makeAlive(true);
+			maze.getCell(5, 4).makeAlive(true);
+		}
+		p++;
 		//select a random cell to start
 		
+		for(int x=0;x<w;x++) {
+			for(int y=0;y<h;y++) {
+				if(checkNeighbors(maze.getCell(x, y))>2) {
+					maze.getCell(x, y).change=1;
+				}
+				if(checkNeighbors(maze.getCell(x, y))==2 && maze.getCell(x, y).isAlive()) {
+					//maze.getCell(x, y).change=0;
+				}
+				if(checkNeighbors(maze.getCell(x, y))<2 && maze.getCell(x, y).isAlive()) {
+					maze.getCell(x, y).change=-1;
+				}
+				
+			}
+		}
 		//call selectNextPath method with the randomly selected cell
-		
+		for(int x=0;x<w;x++) {
+			for(int y=0;y<h;y++) {
+				if(maze.getCell(x, y).change==1) {
+						maze.getCell(x, y).makeAlive(true);
+						maze.getCell(x, y).change=0;
+				}
+				else if(maze.getCell(x, y).change==-1) {
+					maze.getCell(x, y).makeAlive(false);
+					maze.getCell(x, y).change=0;
+			}
+				else {
+					
+				}
+			}
+		}
 		return maze;
 	}
 
-	private static void selectNextPath(Cell currentCell) {
-		// mark current cell as visited
+	
 
-		// check for unvisited neighbors
-		
-		// if has unvisited neighbors,
-			// select one at random.
-			// push it to the stack
-			// remove the wall between the two cells
-			// make the new cell the current cell and mark it as visited
-		
-			//call the selectNextPath method with the current cell
-			
-		// if all neighbors are visited
-			//if the stack is not empty
-				// pop a cell from the stack
-				// make that the current cell
-		
-				//call the selectNextPath method with the current cell
-	}
-
-	private static void removeWalls(Cell c1, Cell c2) {
+	private static int checkNeighbors(Cell currentCell) {
+		int numNei=0;
+		for(int i=-1;i<2;i++) {
+			for(int x=-1;x<2;x++) {
+				if(currentCell.getX()+i>-1 && currentCell.getX()+i<width && currentCell.getY()+x>-1 && currentCell.getY()+x<height) {
+					if(maze.getCell(currentCell.getX()+i, currentCell.getY()+x).isAlive()) {
+						numNei++;
+					}
+				}
+			}
+		}
+	
+		return numNei;
 		
 	}
 
-	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {
-		return null;
-	}
+	
+
+	
 }

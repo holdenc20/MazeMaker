@@ -8,44 +8,27 @@ public class Cell {
 	private int x;
 	private int y;
 	
-	private int size = 100;
+	private int size = 25;
 	
-	private boolean visited;
-	
-	private boolean northWall;
-	private boolean southWall;
-	private boolean eastWall; 
-	private boolean westWall;
-	
+	private boolean alive;
+	public int change=0;
+
 	public Cell(int x, int y){
 		this.x = x;
 		this.y = y;
 		
-		visited = false;
+		alive = false;
 		
-		northWall = true;
-		southWall = true;
-		eastWall = true;
-		westWall = true;
 	}
 	
 	public void draw(Graphics g){
-		g.setColor(Color.BLUE);
+		g.setColor(Color.black);
+		if(this.isAlive()) {
+			g.setColor(Color.green);
+		}
 		g.fillOval((x * size) + (size / 2) + X_MARGIN, (y * size) + (size / 2) + Y_MARGIN, 4, 4);
-		
 		g.setColor(Color.RED);
-		if(northWall){
-			g.drawLine((x * size) + X_MARGIN, (y * size) + Y_MARGIN, (x * size) + size + X_MARGIN, (y * size) + Y_MARGIN);
-		}
-		if(southWall){
-			g.drawLine((x * size) + X_MARGIN, (y * size) + size + Y_MARGIN, (x * size) + size + X_MARGIN, (y * size) + size + Y_MARGIN);
-		}
-		if(eastWall){
-			g.drawLine((x * size) + size + X_MARGIN, (y * size) + Y_MARGIN, (x * size) + size + X_MARGIN, (y * size) + size + Y_MARGIN);
-		}
-		if(westWall){
-			g.drawLine((x * size) + X_MARGIN, (y * size) + Y_MARGIN, (x * size) + X_MARGIN, (y * size) + size + Y_MARGIN);
-		}
+		
 	}
 
 	public int getX() {
@@ -64,43 +47,11 @@ public class Cell {
 		this.y = y;
 	}
 
-	public boolean hasBeenVisited() {
-		return visited;
+	public boolean isAlive() {
+		return alive;
 	}
 
-	public void setBeenVisited(boolean beenVisited) {
-		this.visited = beenVisited;
-	}
-
-	public boolean hasNorthWall() {
-		return northWall;
-	}
-
-	public void setNorthWall(boolean northWall) {
-		this.northWall = northWall;
-	}
-
-	public boolean hasSouthWall() {
-		return southWall;
-	}
-
-	public void setSouthWall(boolean southWall) {
-		this.southWall = southWall;
-	}
-
-	public boolean hasEastWall() {
-		return eastWall;
-	}
-
-	public void setEastWall(boolean eastWall) {
-		this.eastWall = eastWall;
-	}
-
-	public boolean hasWestWall() {
-		return westWall;
-	}
-
-	public void setWestWall(boolean westWall) {
-		this.westWall = westWall;
+	public void makeAlive(boolean Alive) {
+		alive = Alive;
 	}
 }

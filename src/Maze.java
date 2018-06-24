@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Maze {
@@ -22,6 +23,10 @@ public class Maze {
 	public void draw(Graphics g) {
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[i].length; j++) {
+				g.setColor(Color.black);
+				if(maze[i][j].isAlive()) {
+					g.setColor(Color.green);
+				}
 				maze[i][j].draw(g);
 			}
 		}
